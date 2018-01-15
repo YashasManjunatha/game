@@ -1,0 +1,58 @@
+Game: Project Specification
+
+1) The Vortex variant of Breakout was interesting because it fundamentally changed up the game by altering the shape of stage.
+
+2) Levels
+	a. Level 1 - Triangle
+	The stage walls will be shaped similar to a triangle and in the middle the blocks will be arranged in an upside down triangle formation. In the center will be a power-up block.
+	
+	       /\       
+	      /  \      
+	     /    \     
+	    / ____ \    
+	   /  \  /  \   
+	  /    \/    \  
+	 /            \ 
+	/______________\
+	b. Level 2 - Square
+	The typically shaped stage will have a rectangular formation of blocks in the middle. In the center will be an extra life block.
+	
+	+----------+
+	|          |
+	|  +----+  |
+	|  |    |  |
+	|  +----+  |
+	|          |
+	|          |
+	+----------+
+	c. Level 3 - Pentagon
+	This stage will be shaped like a pentagon with a pentagon formation of blocks to clear inside. In the center will be another power up block.
+	
+	 	  ,'.
+		,'   `.
+	  ,'       `.
+	,'    ,'.    `.
+	\     \_/     /
+	 \           /
+	  \         /
+	   \_______/
+
+3) Blocks
+	a. Regular Block - Cleared after one hit.
+	b. Power-Up Block - Drops a random power up. Cleared after one hit.
+	c. Extra Life Block - If this block is hit, the player gets an additional life.
+
+4) Power Ups
+	a. Paddle Flip - Picking this up flips the control of the paddle (i.e. pressing the right arrow makes the paddle move left) for 15 seconds.
+	b. Bounce Back - When the ball hits the paddle, it bounces back the same way it came. This power up is active for 15 seconds.
+	c. Paddle Speed Up - This power up increases the speed of the paddle for 15 seconds.
+
+5) Cheat Codes
+	a. Key '1', '2', and '3' to jump to the corresponding level.
+	b. Key 'L' to add an extra life.
+	c. Key 'F' for the flip power up to activate.
+	d. Key 'B' for the bounce back power up to activate.
+	e. Key 'S' for the speed up power up to activate.
+
+6) Something Extra
+	Inspired by the Vortex variant of Breakout, in my version each level will have different stage shape. This is a substantial addition to the game because it fundamentally alters the ball movement in the stage and forces the player to adapt their strategy based on the shape of the level.

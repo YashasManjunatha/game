@@ -33,6 +33,9 @@ public class Shapeout extends Application {
     private boolean game_begun = false;
     private int myLives = 3;
     private int myScore = 0;
+    private boolean flip_paddle = false;
+    private boolean long_paddle = false;
+    private boolean speed_paddle = false;
     
     private Stage myStage;
 	private Rectangle myPaddle;
@@ -72,7 +75,7 @@ public class Shapeout extends Application {
 		instructions[2] = new Text(50, 180, "Control the paddle with the Left and Right Arrows.");
 		instructions[3] = new Text(50, 210, "All blocks are destroyed with one hit.");
 		instructions[4] = new Text(50, 240, "Purple blocks drop power ups and green blocks give you an extra life.");
-		instructions[5] = new Text(50, 270, "Power Ups (last for 20 seconds): 'F' flips paddle control;");
+		instructions[5] = new Text(50, 270, "Power Ups (last till end of round): 'F' flips paddle control;");
 		instructions[6] = new Text(80, 300, "'L' makes paddle larger; 'S' speeds up paddle");
 		instructions[7] = new Text(50, 330, "There are 3 Levels. Destroy all the blocks to win.");
 		instructions[8] = new Text(180, 400, "Press SPACE to start!");
@@ -87,6 +90,9 @@ public class Shapeout extends Application {
 	
 	private Scene setupLevel (int level, int width, int height, Paint background) {
 		ball_launched = false;
+		flip_paddle = false;
+		long_paddle = false;
+	    	speed_paddle = false;
 		myLevel = new Level (level, width, height, background);
 		
 		myPaddle = new Rectangle((width - PADDLE_WIDTH)/2, height - PADDLE_HEIGHT - 5, PADDLE_WIDTH, PADDLE_HEIGHT);
@@ -135,10 +141,16 @@ public class Shapeout extends Application {
 			ball_launched = true;
 		}
 		if (code == KeyCode.RIGHT) {
-			movePaddle(1);
+			if (flip_paddle)
+				movePaddle(-1);
+			else
+				movePaddle(1);
         }
         else if (code == KeyCode.LEFT) {
-        		movePaddle(-1);
+        		if (flip_paddle)
+				movePaddle(1);
+        		else 
+        			movePaddle(-1);
         }
 		
 		if (code == KeyCode.R) {
@@ -152,6 +164,18 @@ public class Shapeout extends Application {
 		}
 		if (code == KeyCode.DIGIT3) {
 			myStage.setScene(setupLevel(3, SIZE, SIZE, BACKGROUND));
+		}
+		if (code == KeyCode.L) {
+			myLives++;
+		}
+		if (code == KeyCode.F) {
+			flip_paddle = !flip_paddle;
+		}
+		if (code == KeyCode.B) {
+			long_paddle = !long_paddle;
+		}
+		if (code == KeyCode.S) {
+			speed_paddle = !speed_paddle;
 		}
 	}
 	
@@ -238,10 +262,27 @@ public class Shapeout extends Application {
 					if(block.getType() == '+')
 						myLives++;
 					if(block.getType() == 'P') {
-						//paddle_speed = 15;
+						activatePowerup((int)(Math.random()*3));
 					}
 				}
 			}
+		}
+	}
+	
+	private void activatePowerup (int p) {
+		switch(p) {
+		case 0:
+			flip_paddle = true;
+			myLevel.addRoot(new Text(350, 20, "Paddle Flip Active"));
+			break;
+		case 1:
+			long_paddle = true;
+			myLevel.addRoot(new Text(350, 40, "Long Paddle Active"));
+			break;
+		case 2:
+			speed_paddle = true;
+			myLevel.addRoot(new Text(350, 60, "Speed Paddle Active"));
+			break;
 		}
 	}
 	
@@ -253,6 +294,20 @@ public class Shapeout extends Application {
 				endGame("You Won!!");
 		}
 	}
+	
+	private void checkPowerUp() {
+		if (long_paddle) {
+			myPaddle.setWidth(PADDLE_WIDTH * 2);
+		} else {
+			myPaddle.setWidth(PADDLE_WIDTH);
+		}
+		
+		if (speed_paddle) {
+			paddle_speed = 15;
+		} else {
+			paddle_speed = 10;
+		}
+	}
 
 	private void step(double elapsedTime) {
 		if(game_begun) {
@@ -261,6 +316,7 @@ public class Shapeout extends Application {
 			ensurePaddleInStage();
 			
 			if (ball_launched && !ball_destroyed) {
+				checkPowerUp();
 				checkForNextLevel();
 				
 				handleBallFallingOff();

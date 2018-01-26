@@ -23,8 +23,8 @@ Cheat Keys:
 * Key '1', '2', and '3' to jump to the corresponding level.
 * Key 'L' to add an extra life.
 * Key 'F' to toggle the flip paddle controls power up.
-* Key 'B' to toggle the long paddle power up to activate.
-* Key 'S' to toggle the speed up power up to activate.
+* Key 'B' to toggle the long paddle power up.
+* Key 'S' to toggle the speed up power up.
 
 A known bug is interaction of the ball with corners of blocks and paddles causes irrational behaviour and sometimes the ball bounces back the same way it came instead of normal bouncing behaviour. This is caused by the detection of collisions to two different sides simultaneously.
 
